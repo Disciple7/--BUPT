@@ -1,5 +1,6 @@
 #include"s_mainfunc.h"
 
+extern HANDLE hMutex;
 SOCKET socket_init(SOCKADDR_IN addrSrv)
 {
 	SOCKET sockClient = socket(AF_INET, SOCK_STREAM, IPPROTO_IP);
@@ -14,11 +15,25 @@ SOCKET socket_init(SOCKADDR_IN addrSrv)
 	return sockClient;
 }
 
-void state_socket(SOCKET sockClient, vector<string>& wordList, vector<player>& playerList, vector<tester>& testerList)
+void state_socket(SOCKET sockClient, vector<string> *wordListPtr, vector<player>* playerListPtr, vector<tester>* testerListPtr)
 {
-	char recvBuf[MaxSize];//所有通信的接收缓冲区
+	WaitForSingleObject(hMutex, INFINITE);
+	//接收5发送5
+	Sleep(100);
+	int test_flag = send(sockClient, "CEST1", 5, 0);
+	if (test_flag<0)cout << "test_flag err 20" << endl;
+	char test_flag_buf[5];
+	test_flag = recv(sockClient, test_flag_buf, 5, 0);
+	if (test_flag>0)printf("%s", test_flag_buf);
+	else cout << "test_flag err 10" << endl;
+
+	vector<string>& wordList = *wordListPtr;
+	vector<player>& playerList = *playerListPtr;
+	vector<tester>& testerList = *testerListPtr;
+	if (sockClient == INVALID_SOCKET)cout << "INVALID_SOCKET" << endl;
+	char recvBuf[512]="\0";//所有通信的接收缓冲区
 	int accurateStateBytes = recv(sockClient, recvBuf, MaxSize, 0);//服务器从客户端接受状态码，判断进行哪一个操作
-	if (accurateStateBytes != 2)
+	if (accurateStateBytes != 1)
 	{
 		cout << "Recv State Err" << endl;
 		closesocket(sockClient);
@@ -32,7 +47,7 @@ void state_socket(SOCKET sockClient, vector<string>& wordList, vector<player>& p
 		int accurateByte = 0;
 		for (unsigned int i = 0; i < wordList.size(); i++)
 		{
-			accurateByte = send(sockClient, wordList[i].data(), wordList[i].length(), 0);
+			accurateByte = send(sockClient, wordList[i].c_str(), wordList[i].length(), 0);
 			if (accurateByte != wordList[i].length())
 			{
 				cout << "WORD_SYNC 01" << endl;
@@ -56,8 +71,8 @@ void state_socket(SOCKET sockClient, vector<string>& wordList, vector<player>& p
 		int reg_flag = state_register(tmpUser, playerList, testerList);
 		if (reg_flag == 0 || reg_flag == 1 || reg_flag == 2)
 		{
-			tmpString = std::to_string(reg_flag).data();
-			accurateByte = send(sockClient, tmpString.data(), tmpString.length(), 0);
+			tmpString = std::to_string(reg_flag).c_str();
+			accurateByte = send(sockClient, tmpString.c_str(), tmpString.length(), 0);
 			if (accurateByte <= 0)
 			{
 				cout << "USER_REGIST ERR 02_2" << endl;
@@ -80,8 +95,8 @@ void state_socket(SOCKET sockClient, vector<string>& wordList, vector<player>& p
 		vector<string>tmpUser;
 		string_split(tmpString, tmpUser, ",");
 		int login_flag = state_login(tmpUser, playerList, testerList);
-		tmpString = std::to_string(login_flag).data();
-		accurateByte = send(sockClient, tmpString.data(), tmpString.length(), 0);
+		tmpString = std::to_string(login_flag).c_str();
+		accurateByte = send(sockClient, tmpString.c_str(), tmpString.length(), 0);
 		if (accurateByte != 2)
 		{
 			cout << "USER_LOGIN ERR 03_3" << endl;
@@ -143,10 +158,10 @@ void state_socket(SOCKET sockClient, vector<string>& wordList, vector<player>& p
 			break;
 		}
 		state_query(tmpInfo, playerList, testerList);//state_query把查询到的信息放到tmpInfo中
-		accurateByte = send(sockClient, tmpInfo[0].data(), tmpInfo[0].length(), 0);
+		accurateByte = send(sockClient, tmpInfo[0].c_str(), tmpInfo[0].length(), 0);
 		for (unsigned int i = 1; i < tmpInfo.size(); i++)
 		{
-			accurateByte = send(sockClient, tmpInfo[i].data(), tmpInfo[i].length(), 0);
+			accurateByte = send(sockClient, tmpInfo[i].c_str(), tmpInfo[i].length(), 0);
 			if (accurateByte <= 0)
 			{
 				cout << "USER_QUERY ERR 07_3" << endl;

@@ -3,7 +3,7 @@
 int state_player_result(vector<string>&tmpUser, vector<player>&playerList)
 {
 	string name = tmpUser[0];
-	int bestRound = atoi(tmpUser[1].data());
+	int bestRound = atoi(tmpUser[1].c_str());
 	player nowPlayer("NULL", "NULL");
 	if (bestRound == 0)
 	{

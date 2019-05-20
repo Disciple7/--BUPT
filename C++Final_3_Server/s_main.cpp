@@ -1,9 +1,13 @@
 #pragma comment (lib, "ws2_32.lib")  //加载 ws2_32.dll
 #include"s_mainfunc.h"
 
+HANDLE hMutex;
 struct state_socket_Param
 {
-	SOCKET sockClient;
+	vector<string>* wordList;
+	vector<player>* playerList;
+	vector<tester>* testerList;
+	string targetIP;
 };
 
 int main() {
@@ -57,12 +61,22 @@ int main() {
 			continue;
 		}
 		cout << "New Client Joins In." << endl;
-		HANDLE hThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)state_socket, (LPVOID)sockClient, 0, 0);
+		state_socket_Param Param1;
+		Param1.playerList = &playerList;
+		Param1.testerList = &testerList;
+		Param1.wordList = &wordList;
+		//发送5接收5
+		int test_flag = send(sockClient, "SEST", 5, 0);
+		char test_flag_buf[5];
+		test_flag = recv(sockClient, test_flag_buf, 5, 0);
+		printf("%s", test_flag_buf);
+
+		HANDLE hThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)state_socket,(LPVOID)&Param1 , 0, 0);
 		if (hThread != NULL)
 		{
 			CloseHandle(hThread);
-			Sleep(1000);
 		}
+		Sleep(100);
 	}
 	WSACleanup();
 	return 0;

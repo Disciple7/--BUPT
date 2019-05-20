@@ -2,6 +2,8 @@
 
 int state_socket(stateCode state, string& myInfo, SOCKET sockClient)//其他情况下直接转成字符串传就行
 {
+
+
 	switch (state)
 	{
 	case USER_REGIST:
@@ -14,7 +16,7 @@ int state_socket(stateCode state, string& myInfo, SOCKET sockClient)//其他情况下
 			return -1;
 		}
 		//发送账户类型，用户名和密码
-		accurateBytes = send(sockClient, myInfo.data(), myInfo.length(), 0);
+		accurateBytes = send(sockClient, myInfo.c_str(), myInfo.length(), 0);
 		if (accurateBytes != myInfo.length())
 		{
 			cout << "send error 02_2" << endl;
@@ -50,7 +52,7 @@ int state_socket(stateCode state, string& myInfo, SOCKET sockClient)//其他情况下
 			return -1;
 		}
 		//发送账户类型，用户名，密码
-		accurateBytes = send(sockClient, myInfo.data(), myInfo.length(), 0);
+		accurateBytes = send(sockClient, myInfo.c_str(), myInfo.length(), 0);
 		if (accurateBytes != myInfo.length())
 		{
 			cout << "send error 03_2" << endl;
@@ -84,7 +86,7 @@ int state_socket(stateCode state, string& myInfo, SOCKET sockClient)//其他情况下
 			return -1;
 		}
 		//发送用户名和本轮游戏成绩
-		accurateBytes = send(sockClient, myInfo.data(), myInfo.length(), 0);
+		accurateBytes = send(sockClient, myInfo.c_str(), myInfo.length(), 0);
 		if (accurateBytes != myInfo.length())
 		{
 			cout << "send error 04_2" << endl;
@@ -97,7 +99,7 @@ int state_socket(stateCode state, string& myInfo, SOCKET sockClient)//其他情况下
 		//TESTER_RESULT的状态码由flush_tester自己发送。在这个状态下，只发送单个单词。
 		int accurateBytes = 0;
 		//发送用户名或单词列表。在一次通信中，第一次发送为用户名，之后为单词。
-		accurateBytes = send(sockClient, myInfo.data(), myInfo.length(), 0);
+		accurateBytes = send(sockClient, myInfo.c_str(), myInfo.length(), 0);
 		if (accurateBytes != myInfo.length())
 		{
 			cout << "send error 06_2" << endl;
@@ -116,7 +118,7 @@ int state_socket(stateCode state, string& myInfo, SOCKET sockClient)//其他情况下
 			cout << "send error 07_1" << endl;
 			return -1;
 		}
-		accurateBytes = send(sockClient, myInfo.data(), myInfo.length(), 0);//发送“选项a，选项b”；a=1或2时b=1或2或3；a=3时b=“用户名”
+		accurateBytes = send(sockClient, myInfo.c_str(), myInfo.length(), 0);//发送“选项a，选项b”；a=1或2时b=1或2或3；a=3时b=“用户名”
 		if (accurateBytes != myInfo.length())
 		{
 			cout << "send error 07_2" << endl;
@@ -143,13 +145,21 @@ int state_socket(stateCode state, string& myInfo, SOCKET sockClient)//其他情况下
 }
 int state_socket(stateCode state, vector<string>& wordList, SOCKET sockClient)//进行词库同步时需要传入一个容器
 {
+	//发送5接收5
+	char test_flag_buf[5];
+	int test_flag = recv(sockClient, test_flag_buf, 5, 0);
+	if (test_flag>0)printf("%s\n", test_flag_buf);
+	else cout << "test_flag err 10" << endl;
+	test_flag = send(sockClient, "CEST1", 5, 0);
+	if (test_flag<0)cout << "test_flag err 20" << endl;
+
 	if (state != WORD_SYNC)
 	{
 		cout << "state code error 01" << endl;
 		return -1;
 	}
 	int accurateBytes = 0;
-	accurateBytes=send(sockClient, "1", 2, 0);
+	accurateBytes=send(sockClient, "1", 1, 0);
 	if (accurateBytes <= 0)
 	{
 		cout << "send err 01" << endl;
@@ -160,6 +170,7 @@ int state_socket(stateCode state, vector<string>& wordList, SOCKET sockClient)//
 	accurateBytes = recv(sockClient, recvBuf, 1024, 0);
 	while (accurateBytes > 0)
 	{
+		Sleep(100);
 		recvBuf[accurateBytes] = '\0';//靠，好多地方忘记封'\0'了
 		string tmpString = recvBuf;
 		wordList.push_back(tmpString);
@@ -181,5 +192,12 @@ SOCKET socket_init(SOCKADDR_IN addrSrv)
 	}
 	else if (connectResult == 0)
 		cout << "Connect Successfully" << endl;
+
+	char test_flag_buf[5];//接收5发送5
+	int test_flag = recv(sockClient, test_flag_buf, 5, 0);
+	if(test_flag>0)printf("%s", test_flag_buf);
+	else cout << "test_flag err 00" << endl;
+	test_flag = send(sockClient, "CEST", 5, 0);
+
 	return sockClient;
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include"c_global.h"
 #include"c_database.h"
+
 //通信函数
 SOCKET socket_init(SOCKADDR_IN addrSrv);//短通信模式。自动生成一个可用套接字
 enum stateCode { ERR_CODE, WORD_SYNC, USER_REGIST, USER_LOGIN, PLAYER_RESULT, TESTER_RESULT=6, USER_QUERY };

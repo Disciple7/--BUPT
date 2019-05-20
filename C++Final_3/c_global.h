@@ -1,6 +1,4 @@
-#ifndef c_global_H
-#define c_global_H
-
+#pragma once
 #define DEV_MODE 1
 using namespace std;
 #include<WinSock2.h>
@@ -13,6 +11,3 @@ using namespace std;
 #include<time.h>
 #include<Windows.h>
 #pragma comment(lib,"WS2_32.LIB")
-
-
-#endif // c_global_H
