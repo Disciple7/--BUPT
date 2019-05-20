@@ -7,14 +7,13 @@ int state_socket(stateCode state, string& myInfo, SOCKET sockClient)//其他情况下
 	case USER_REGIST:
 	{//发送状态2状态码
 		int accurateBytes = 0;
-		//发送账户类型
 		accurateBytes = send(sockClient, "2", 2, 0);
 		if (accurateBytes <= 0)
 		{
 			cout << "send error 02_1" << endl;
 			return -1;
 		}
-		//发送用户名和密码
+		//发送账户类型，用户名和密码
 		accurateBytes = send(sockClient, myInfo.data(), myInfo.length(), 0);
 		if (accurateBytes != myInfo.length())
 		{
@@ -50,7 +49,7 @@ int state_socket(stateCode state, string& myInfo, SOCKET sockClient)//其他情况下
 			cout << "send error 03_1" << endl;
 			return -1;
 		}
-		//发送用户名和密码
+		//发送账户类型，用户名，密码
 		accurateBytes = send(sockClient, myInfo.data(), myInfo.length(), 0);
 		if (accurateBytes != myInfo.length())
 		{
@@ -95,14 +94,8 @@ int state_socket(stateCode state, string& myInfo, SOCKET sockClient)//其他情况下
 	}
 	case TESTER_RESULT:
 	{
+		//TESTER_RESULT的状态码由flush_tester自己发送。在这个状态下，只发送单个单词。
 		int accurateBytes = 0;
-		accurateBytes = send(sockClient, "6", 2, 0);
-		//发送状态6状态码
-		if (accurateBytes <= 0)
-		{
-			cout << "send error 06_1" << endl;
-			return -1;
-		}
 		//发送用户名或单词列表。在一次通信中，第一次发送为用户名，之后为单词。
 		accurateBytes = send(sockClient, myInfo.data(), myInfo.length(), 0);
 		if (accurateBytes != myInfo.length())
@@ -123,7 +116,7 @@ int state_socket(stateCode state, string& myInfo, SOCKET sockClient)//其他情况下
 			cout << "send error 07_1" << endl;
 			return -1;
 		}
-		accurateBytes = send(sockClient, myInfo.data(), myInfo.length(), 0);
+		accurateBytes = send(sockClient, myInfo.data(), myInfo.length(), 0);//发送“选项a，选项b”；a=1或2时b=1或2或3；a=3时b=“用户名”
 		if (accurateBytes != myInfo.length())
 		{
 			cout << "send error 07_2" << endl;

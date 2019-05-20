@@ -33,6 +33,15 @@
     <ClCompile Include="s_login.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="s_player_result.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="s_tester_result.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="s_search.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="s_database.h">

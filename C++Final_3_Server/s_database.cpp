@@ -58,38 +58,6 @@ void tester::rewards(int wordAdd)
 		level++;//每升1级，升级需要单词数变为级数+1。0级1个单词，1级2个单词，以此类推。单词总数不像Exp一样会自减，因此递推得到等级与单词总数的关系。
 };
 
-
-bool string_cmp(string&x, string&y)
-{
-	return x.length() > y.length();
-}
-//玩家排序方法
-bool player_name_cmp(player&p1, player&p2)//按名称排序
-{
-	return p1.get_name() < p2.get_name();
-}
-bool player_level_cmp(player& p1, player&p2)//按等级排序
-{
-	return p1.get_level() > p2.get_level();
-}
-bool player_best_round_cmp(player& p1, player&p2)//按最好成绩排序
-{
-	return p1.get_best_round() > p2.get_best_round();
-}
-//出题者排序方法
-bool tester_name_cmp(tester&p1, tester&p2)//按名称排序
-{
-	return p1.get_name() < p2.get_name();
-}
-bool tester_level_cmp(tester&p1, tester&p2)//按等级排序
-{
-	return p1.get_level() > p2.get_level();
-}
-bool tester_problem_num_cmp(tester&p1, tester&p2)//按出题数排序
-{
-	return p1.get_problem_num() > p2.get_problem_num();
-}
-
 void string_split(std::string& s, std::vector<std::string>& v, const std::string& c)
 {
 	std::string::size_type pos1, pos2;
@@ -105,3 +73,53 @@ void string_split(std::string& s, std::vector<std::string>& v, const std::string
 	if (pos1 != s.length())
 		v.push_back(s.substr(pos1));
 }
+
+bool string_cmp(string&x, string&y)
+{
+	return x.length() > y.length();
+}
+//玩家排序方法
+bool player_name_cmp(string&p1, string&p2)//按名称排序
+{
+	vector<string>tmp1, tmp2;
+	string_split(p1, tmp1, "\t");
+	string_split(p2, tmp2, "\t");
+	return tmp1[0] < tmp2[0];
+}
+bool player_level_cmp(string& p1, string&p2)//按等级排序
+{
+	vector<string>tmp1, tmp2;
+	string_split(p1, tmp1, "\t\t\t");
+	string_split(p2, tmp2, "\t\t\t");
+	return atoi(tmp1[1].data())< atoi(tmp2[1].data());
+}
+bool player_best_round_cmp(string& p1, string&p2)//按最好成绩排序
+{
+	vector<string>tmp1, tmp2;
+	string_split(p1, tmp1, "\t\t\t");
+	string_split(p2, tmp2, "\t\t\t");
+	return atoi(tmp1[2].data())< atoi(tmp2[2].data());
+}
+//出题者排序方法
+bool tester_name_cmp(string&p1, string&p2)//按名称排序
+{
+	vector<string>tmp1, tmp2;
+	string_split(p1, tmp1, "\t\t\t");
+	string_split(p2, tmp2, "\t\t\t");
+	return tmp1[0]< tmp2[0];
+}
+bool tester_level_cmp(string&p1, string&p2)//按等级排序
+{
+	vector<string>tmp1, tmp2;
+	string_split(p1, tmp1, "\t\t\t");
+	string_split(p2, tmp2, "\t\t\t");
+	return atoi(tmp1[1].data())< atoi(tmp2[1].data());
+}
+bool tester_problem_num_cmp(string&p1, string&p2)//按出题数排序
+{
+	vector<string>tmp1, tmp2;
+	string_split(p1, tmp1, "\t\t\t");
+	string_split(p2, tmp2, "\t\t\t");
+	return atoi(tmp1[2].data())< atoi(tmp2[2].data());
+}
+

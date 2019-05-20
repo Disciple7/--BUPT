@@ -14,4 +14,5 @@
 #include <stdio.h>
 using namespace std;
 
+#define MaxSize 1024
 #endif // s_global_H

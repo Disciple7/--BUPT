@@ -139,7 +139,10 @@
     <ClCompile Include="s_init.cpp" />
     <ClCompile Include="s_login.cpp" />
     <ClCompile Include="s_main.cpp" />
+    <ClCompile Include="s_player_result.cpp" />
+    <ClCompile Include="s_search.cpp" />
     <ClCompile Include="s_sock_server.cpp" />
+    <ClCompile Include="s_tester_result.cpp" />
     <ClCompile Include="s_user_register.cpp" />
   </ItemGroup>
   <ItemGroup>
