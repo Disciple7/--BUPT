@@ -65,11 +65,6 @@ int main() {
 		Param1.playerList = &playerList;
 		Param1.testerList = &testerList;
 		Param1.wordList = &wordList;
-		//∑¢ÀÕ5Ω” ’5
-		int test_flag = send(sockClient, "SEST", 5, 0);
-		char test_flag_buf[5];
-		test_flag = recv(sockClient, test_flag_buf, 5, 0);
-		printf("%s", test_flag_buf);
 
 		HANDLE hThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)state_socket,(LPVOID)&Param1 , 0, 0);
 		if (hThread != NULL)

@@ -145,14 +145,6 @@ int state_socket(stateCode state, string& myInfo, SOCKET sockClient)//其他情况下
 }
 int state_socket(stateCode state, vector<string>& wordList, SOCKET sockClient)//进行词库同步时需要传入一个容器
 {
-	//发送5接收5
-	char test_flag_buf[5];
-	int test_flag = recv(sockClient, test_flag_buf, 5, 0);
-	if (test_flag>0)printf("%s\n", test_flag_buf);
-	else cout << "test_flag err 10" << endl;
-	test_flag = send(sockClient, "CEST1", 5, 0);
-	if (test_flag<0)cout << "test_flag err 20" << endl;
-
 	if (state != WORD_SYNC)
 	{
 		cout << "state code error 01" << endl;
@@ -192,12 +184,6 @@ SOCKET socket_init(SOCKADDR_IN addrSrv)
 	}
 	else if (connectResult == 0)
 		cout << "Connect Successfully" << endl;
-
-	char test_flag_buf[5];//接收5发送5
-	int test_flag = recv(sockClient, test_flag_buf, 5, 0);
-	if(test_flag>0)printf("%s", test_flag_buf);
-	else cout << "test_flag err 00" << endl;
-	test_flag = send(sockClient, "CEST", 5, 0);
 
 	return sockClient;
 }

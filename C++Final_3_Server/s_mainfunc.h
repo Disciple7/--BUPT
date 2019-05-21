@@ -3,7 +3,6 @@
 #include"s_database.h"
 //通信函数(s_sock_server)
 enum stateCode { ERR_CODE, WORD_SYNC, USER_REGIST, USER_LOGIN, PLAYER_RESULT, TESTER_RESULT=6, USER_QUERY };
-SOCKET socket_init(SOCKADDR_IN addrSrv);//短通信模式。自动生成一个可用套接字
 void state_socket(SOCKET sockClient, vector<string>* wordListPtr, vector<player>* playerListPtr, vector<tester>* testerListPtr);//服务端子线程函数。使用有限自动机模型
 
 //注册状态（在s_user_register.cpp中）

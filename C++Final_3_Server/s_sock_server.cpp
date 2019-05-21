@@ -1,37 +1,19 @@
 #include"s_mainfunc.h"
 
 extern HANDLE hMutex;
-SOCKET socket_init(SOCKADDR_IN addrSrv)
-{
-	SOCKET sockClient = socket(AF_INET, SOCK_STREAM, IPPROTO_IP);
-	int connectResult = connect(sockClient, (SOCKADDR*)&addrSrv, sizeof(SOCKADDR));//与服务器进行连接
-	if (connectResult == -1)
-	{
-		cout << "Connection Fucked Up" << endl;
-		return INVALID_SOCKET;
-	}
-	else if (connectResult == 0)
-		cout << "Connect Successfully" << endl;
-	return sockClient;
-}
+
+
 
 void state_socket(SOCKET sockClient, vector<string> *wordListPtr, vector<player>* playerListPtr, vector<tester>* testerListPtr)
 {
 	WaitForSingleObject(hMutex, INFINITE);
 	//接收5发送5
-	Sleep(100);
-	int test_flag = send(sockClient, "CEST1", 5, 0);
-	if (test_flag<0)cout << "test_flag err 20" << endl;
-	char test_flag_buf[5];
-	test_flag = recv(sockClient, test_flag_buf, 5, 0);
-	if (test_flag>0)printf("%s", test_flag_buf);
-	else cout << "test_flag err 10" << endl;
 
 	vector<string>& wordList = *wordListPtr;
 	vector<player>& playerList = *playerListPtr;
 	vector<tester>& testerList = *testerListPtr;
 	if (sockClient == INVALID_SOCKET)cout << "INVALID_SOCKET" << endl;
-	char recvBuf[512]="\0";//所有通信的接收缓冲区
+	char recvBuf[512];//所有通信的接收缓冲区
 	int accurateStateBytes = recv(sockClient, recvBuf, MaxSize, 0);//服务器从客户端接受状态码，判断进行哪一个操作
 	if (accurateStateBytes != 1)
 	{
