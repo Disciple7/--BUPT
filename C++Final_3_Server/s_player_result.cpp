@@ -28,7 +28,7 @@ int state_player_result(vector<string>&tmpUser, vector<player>&playerList)
 	vector<string> tmpInfoList;
 	fstream playerFile;
 	if (DEV_MODE)
-		playerFile.open("D:\\coding\\C++Final\\C++Final_2\\Debug\\playerList.csv", ios::in | ios::out);
+		playerFile.open("D:\\coding\\C++Final\\C++Final_3\\Debug\\playerList.csv", ios::in | ios::out);
 	else
 		playerFile.open("playerList.csv", ios::in | ios::out);
 

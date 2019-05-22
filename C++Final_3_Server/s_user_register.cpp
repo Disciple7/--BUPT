@@ -15,7 +15,7 @@ int state_register(vector<string>& tmpUser,vector<player>& playerList, vector<te
 		}
 		fstream playerFile;
 		if (DEV_MODE)
-			playerFile.open("D:\\coding\\C++Final\\C++Final_2\\Debug\\playerList.csv", ios::out | ios::app);
+			playerFile.open("D:\\coding\\C++Final\\C++Final_3\\Debug\\playerList.csv", ios::out | ios::app);
 		else
 			playerFile.open("playerList.csv");
 		if (!playerFile)
@@ -42,7 +42,7 @@ int state_register(vector<string>& tmpUser,vector<player>& playerList, vector<te
 		}
 		fstream testerFile;
 		if (DEV_MODE)
-			testerFile.open("D:\\coding\\C++Final\\C++Final_2\\Debug\\testerList.csv", ios::out | ios::app);
+			testerFile.open("D:\\coding\\C++Final\\C++Final_3\\Debug\\testerList.csv", ios::out | ios::app);
 		else
 			testerFile.open("testerFile.csv");
 		if (!testerFile)

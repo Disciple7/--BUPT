@@ -5,7 +5,7 @@ void wordList_init(vector<string>& wordList)
 	string tmpString;
 	fstream wordFile;
 	if (DEV_MODE)
-		wordFile.open("D:\\coding\\C++Final\\C++Final_2\\Debug\\wordList.csv", ios::out | ios::in);
+		wordFile.open("D:\\coding\\C++Final\\C++Final_3\\Debug\\wordList.csv", ios::out | ios::in);
 	else
 		wordFile.open("wordList.csv", ios::out | ios::in);
 
@@ -23,7 +23,7 @@ void playerList_init(vector<player>& playerList)
 	vector<string> tmpInfoList;
 	fstream playerFile;
 	if (DEV_MODE)
-		playerFile.open("D:\\coding\\C++Final\\C++Final_2\\Debug\\playerList.csv", ios::out | ios::in);
+		playerFile.open("D:\\coding\\C++Final\\C++Final_3\\Debug\\playerList.csv", ios::out | ios::in);
 	else
 		playerFile.open("playerList.csv", ios::out | ios::in);
 	while (playerFile && !(playerFile.peek() == EOF))
@@ -42,7 +42,7 @@ void testerList_init(vector<tester>& testerList)
 	vector<string> tmpInfoList;
 	fstream testerFile;
 	if (DEV_MODE)
-		testerFile.open("D:\\coding\\C++Final\\C++Final_2\\Debug\\testerList.csv", ios::out | ios::in);
+		testerFile.open("D:\\coding\\C++Final\\C++Final_3\\Debug\\testerList.csv", ios::out | ios::in);
 	else
 		testerFile.open("testerList.csv", ios::out | ios::in);
 

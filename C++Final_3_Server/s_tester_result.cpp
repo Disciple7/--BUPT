@@ -4,7 +4,7 @@ int state_tester_result(string name, vector<string>& wordAddList,vector<string>&
 {
 	fstream wordFile;
 	if (DEV_MODE)
-		wordFile.open("D:\\coding\\C++Final\\C++Final_2\\Debug\\wordList.csv", ios::in | ios::out | ios::app);
+		wordFile.open("D:\\coding\\C++Final\\C++Final_3\\Debug\\wordList.csv", ios::in | ios::out | ios::app);
 	else
 		wordFile.open("wordList.csv");
 	if (!wordFile)
@@ -50,7 +50,7 @@ int state_tester_result(string name, vector<string>& wordAddList,vector<string>&
 	vector<string> tmpInfoList;//这两个变量用于提取文件中每一行的用户信息
 	fstream testerFile;
 	if (DEV_MODE)
-		testerFile.open("D:\\coding\\C++Final\\C++Final_2\\Debug\\testerList.csv", ios::in | ios::out);
+		testerFile.open("D:\\coding\\C++Final\\C++Final_3\\Debug\\testerList.csv", ios::in | ios::out);
 	else
 		testerFile.open("testerList.csv");
 	if (!testerFile)
