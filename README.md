@@ -12,6 +12,8 @@ C++Final_2.5是2.0版本的文件，有一些BUG没有解决，没有包含在3.
 
 多线程的Socket通信很麻烦......使用了一些玄学手段才成功运行。
 
+（亲如果有用请给个Star呢^_^）
+
 开发过程中参考的资料：
 本地部分（C++面向对象入门）：  
 http://www.runoob.com/cplusplus/cpp-dynamic-memory.html  
