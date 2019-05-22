@@ -1,6 +1,8 @@
 #include"s_mainfunc.h"
-extern HANDLE hMutex;
+extern HANDLE hMutex;//Mutex貌似没有用，是参考别人的程序加进来的
 extern vector<SOCKET> socketPool;
+/*由于将SOCKET变量作为局部变量传入时，连接会莫名中断，于是使用了全局变量。虽然在线程中的获得的值一模一样，但是就是能跑和不能跑的区别......*/
+/*数据容器用指针传入时会指到莫名其妙的地方去，同样不知道为何......因此使用了全局变量*/
 extern vector<player> playerList;
 extern vector<tester> testerList;
 extern vector<string> wordList;
@@ -11,7 +13,6 @@ void state_socket()
 
 	Sleep(100);
 	WaitForSingleObject(hMutex, INFINITE);
-	//接收5发送5
 	SOCKET test_flag_socketClient = socketPool.back();
 
 	char recvBuf[512];//所有通信的接收缓冲区
