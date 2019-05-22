@@ -1,4 +1,4 @@
-# --BUPT
+# BUPT C++
 北邮C++大作业，单词消除游戏
 
 使用Visual Studio 2017开发，打开C++Final_3.sln文件，编译两个项目，先运行server，再运行client即可。
