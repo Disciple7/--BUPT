@@ -2,7 +2,7 @@
 
 void state_query(vector<string>& tmpInfo,vector<player>& playerList, vector<tester>& testerList)
 {
-	int order =atoi(tmpInfo[0].c_str());
+	int order =atoi(tmpInfo[0].data());
 	if (order == 0)
 	{
 		cout << "state_query err 07_4" << endl;
@@ -22,7 +22,7 @@ void state_query(vector<string>& tmpInfo,vector<player>& playerList, vector<test
 				+ "\t\t\t" + std::to_string(playerList[i].get_best_round()) + "\t\t\t" + std::to_string(playerList[i].get_exp()) + "\n";
 			tmpInfo.push_back(tmpString);
 		}
-		order = atoi(userName.c_str());
+		order = atoi(userName.data());
 		if (order == 3)
 			sort(tmpInfo.begin() + 1, tmpInfo.end(), player_best_round_cmp);//可能会遇到同时访问的问题，就把排序改了一下，变得有点奇怪了......
 		else if (order == 2)
@@ -42,7 +42,7 @@ void state_query(vector<string>& tmpInfo,vector<player>& playerList, vector<test
 				+ "\t\t\t" + std::to_string(testerList[i].get_problem_num()) + "\n";
 			tmpInfo.push_back(tmpString);
 		}
-		order = atoi(userName.c_str());
+		order = atoi(userName.data());
 		if (order == 3)
 			sort(tmpInfo.begin() + 1, tmpInfo.end(), tester_problem_num_cmp);
 		else if (order == 2)

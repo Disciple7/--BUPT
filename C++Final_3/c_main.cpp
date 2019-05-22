@@ -3,6 +3,9 @@
 #pragma comment(lib,"WS2_32.LIB")
 const char *ServerIP = "127.0.0.1";
 
+void Rec(SOCKET sockClient);
+void Send(SOCKET sockClient);
+
 int main(int argc, char** argv)
 {
 	//设置第一个套接字，建立连接
@@ -31,7 +34,7 @@ int main(int argc, char** argv)
 	addrSrv.sin_family = AF_INET;
 	addrSrv.sin_port = htons(4827);//设定需要连接的服务器的端口地址
 	//初始化第一个套接字
-	
+
 	vector<string> wordList;
 	SOCKET sockClient = socket_init(addrSrv);//状态1：同步单词表
 	state_socket(WORD_SYNC, wordList, sockClient);
