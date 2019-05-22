@@ -3,7 +3,7 @@
 int state_player_result(vector<string>&tmpUser, vector<player>&playerList)
 {
 	string name = tmpUser[0];
-	int bestRound = atoi(tmpUser[1].data());
+	int bestRound = atoi(tmpUser[1].c_str());
 	player nowPlayer("NULL", "NULL");
 	if (bestRound == 0)
 	{
@@ -42,14 +42,15 @@ int state_player_result(vector<string>&tmpUser, vector<player>&playerList)
 	streamoff tmpFptr = playerFile.tellg();//在每行头（上一行的末尾）设一个地址。如果读完上一行行信息是要修改的，回到这个头，并修改信息。
 	while (playerFile && !(playerFile.peek() == EOF))
 	{
-		getline(playerFile, tmpPlayerInfo);
+		getline(playerFile, tmpPlayerInfo);//取文件一行，把它分解成user的数据
 		string_split(tmpPlayerInfo, tmpInfoList, ",");
 		if (tmpInfoList[0] == nowPlayer.get_name())
 		{
 			playerFile.seekp(tmpFptr);
-			playerFile << nowPlayer.get_name() << "," << nowPlayer.get_password() << "," << nowPlayer.get_level() << "," << nowPlayer.get_exp() << "," << nowPlayer.get_best_round();
+			playerFile << "\n" << nowPlayer.get_name() << "," << nowPlayer.get_password() << "," << nowPlayer.get_level() << "," << nowPlayer.get_exp() << "," << nowPlayer.get_best_round() << endl;
 			break;
 		}
+		tmpInfoList.clear();//tmpInfoList要清理，因为string_split用的是push_back，不检查容器内容
 		tmpFptr = playerFile.tellg();
 	}
 	if ((playerIter != playerList.end()) && (!playerFile.eof()))

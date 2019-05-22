@@ -63,14 +63,15 @@ int state_tester_result(string name, vector<string>& wordAddList,vector<string>&
 	streamoff tmpFptr = testerFile.tellg();//在每行头（上一行的末尾）设一个地址。如果读完上一行行信息是要修改的，回到这个头，并修改信息。
 	while (testerFile && !(testerFile.peek() == EOF))
 	{
-		getline(testerFile, tmptesterInfo);
+		getline(testerFile, tmptesterInfo);//取文件一行，把它分解成user的数据
 		string_split(tmptesterInfo, tmpInfoList, ",");
 		if (tmpInfoList[0] == nowTester.get_name())
 		{
 			testerFile.seekp(tmpFptr);
-			testerFile << nowTester.get_name() << "," << nowTester.get_password() << "," << nowTester.get_level() << "," << nowTester.get_problem_num();
+			testerFile << nowTester.get_name() << "," << nowTester.get_password() << "," << nowTester.get_level() << "," << nowTester.get_problem_num() << endl;
 			break;
 		}
+		tmpInfoList.clear();//tmpInfoList要清理，因为string_split用的是push_back，不检查容器内容
 		tmpFptr = testerFile.tellg();
 	}
 	if ((testerIter != testerList.end()) && (!testerFile.eof()))

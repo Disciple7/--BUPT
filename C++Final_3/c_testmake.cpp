@@ -32,22 +32,14 @@ int state_testmake(vector<string>& wordList,vector<string>& wordAddList)
 
 void flush_tester(tester& nowTester, vector<string>& wordAddList, SOCKADDR_IN addrSrv)
 {
-	SOCKET sockClient = socket_init(addrSrv);
-	int accurateBytes = 0;
-	accurateBytes = send(sockClient, "6", 2, 0);
-	//发送状态6状态码
-	if (accurateBytes <= 0)
-	{
-		cout << "send error 06_1" << endl;
-		return;
-	}
 	string tmpString = nowTester.get_name();
-	state_socket(TESTER_RESULT, tmpString, sockClient);//TESTER_RESULT情况下，state_socket只是发送一个单词（可能是用户名，也可能是单词）
-	for (int i = wordAddList.size()-1; i>=0; i--)
+	for (int i = wordAddList.size() - 1; i >= 0; i--)
 	{
-		state_socket(TESTER_RESULT, wordAddList[i], sockClient);
+		tmpString = tmpString + "," + wordAddList[i];
 		wordAddList.pop_back();
 	}
+	SOCKET sockClient = socket_init(addrSrv);
+	int flush_flag = state_socket(TESTER_RESULT, tmpString, sockClient);//发送所有信息，包括用户名和单词列表（整合成一个字符串）
 	closesocket(sockClient);
 	return;
 }

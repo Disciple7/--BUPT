@@ -28,7 +28,7 @@ void state_register(SOCKADDR_IN addrSrv)
 	cin >> password;
 	//一次短连接：构造套接字并发送，关闭连接
 	SOCKET sockClient = socket_init(addrSrv);
-	string tmpString = std::to_string(type_choice)+name + "," + password;//发送"账户类型,名称,密码"，如"1,ppp,ppp"
+	string tmpString = std::to_string(type_choice)+","+name + "," + password+"\0";//发送"账户类型,名称,密码"，如"1,ppp,ppp"
 	state_socket(USER_REGIST, tmpString,sockClient);
 	closesocket(sockClient);
 

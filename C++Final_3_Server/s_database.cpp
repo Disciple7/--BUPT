@@ -91,14 +91,14 @@ bool player_level_cmp(string& p1, string&p2)//按等级排序
 	vector<string>tmp1, tmp2;
 	string_split(p1, tmp1, "\t\t\t");
 	string_split(p2, tmp2, "\t\t\t");
-	return atoi(tmp1[1].data())< atoi(tmp2[1].data());
+	return atoi(tmp1[1].c_str())< atoi(tmp2[1].c_str());
 }
 bool player_best_round_cmp(string& p1, string&p2)//按最好成绩排序
 {
 	vector<string>tmp1, tmp2;
 	string_split(p1, tmp1, "\t\t\t");
 	string_split(p2, tmp2, "\t\t\t");
-	return atoi(tmp1[2].data())< atoi(tmp2[2].data());
+	return atoi(tmp1[2].c_str())< atoi(tmp2[2].c_str());
 }
 //出题者排序方法
 bool tester_name_cmp(string&p1, string&p2)//按名称排序
@@ -113,13 +113,13 @@ bool tester_level_cmp(string&p1, string&p2)//按等级排序
 	vector<string>tmp1, tmp2;
 	string_split(p1, tmp1, "\t\t\t");
 	string_split(p2, tmp2, "\t\t\t");
-	return atoi(tmp1[1].data())< atoi(tmp2[1].data());
+	return atoi(tmp1[1].c_str())< atoi(tmp2[1].c_str());
 }
 bool tester_problem_num_cmp(string&p1, string&p2)//按出题数排序
 {
 	vector<string>tmp1, tmp2;
 	string_split(p1, tmp1, "\t\t\t");
 	string_split(p2, tmp2, "\t\t\t");
-	return atoi(tmp1[2].data())< atoi(tmp2[2].data());
+	return atoi(tmp1[2].c_str())< atoi(tmp2[2].c_str());
 }
 

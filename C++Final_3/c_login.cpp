@@ -11,7 +11,7 @@ int player_login(player& nowPlayer, SOCKADDR_IN addrSrv)//获得名称在列表中的对应
 	cin >> password;
 
 	SOCKET sockClient = socket_init(addrSrv);
-	login_flag = state_socket(USER_LOGIN, name + "," + password, sockClient);
+	login_flag = state_socket(USER_LOGIN, "1,"+name + "," + password, sockClient);
 	closesocket(sockClient);
 
 	if (login_flag == 0)cout << "socket error 03" << endl;
@@ -36,7 +36,7 @@ int tester_login(tester& nowTester, SOCKADDR_IN addrSrv)
 	cin >> password;
 
 	SOCKET sockClient = socket_init(addrSrv);
-	login_flag = state_socket(USER_LOGIN, name + "," + password, sockClient);
+	login_flag = state_socket(USER_LOGIN, "2,"+ name + "," + password, sockClient);
 	closesocket(sockClient);
 
 	if (login_flag == 0)cout << "socket error 05" << endl;

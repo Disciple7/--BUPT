@@ -37,6 +37,7 @@ int main(int argc, char** argv)
 
 	vector<string> wordList;
 	SOCKET sockClient = socket_init(addrSrv);//状态1：同步单词表
+	Sleep(100);
 	state_socket(WORD_SYNC, wordList, sockClient);
 	closesocket(sockClient);
 
@@ -64,7 +65,7 @@ int main(int argc, char** argv)
 		}
 		case 2://游戏模式。登录后获得
 		{
-			login_flag = player_login(nowPlayer, addrSrv);//登录成功时，nowPlayer会变化
+			login_flag = player_login(nowPlayer, addrSrv);//登录成功时，nowPlayer会变化。nowPlayer只有用户名和密码。
 			if (login_flag==1)
 			{
 				bestRound = state_game(wordList);
@@ -74,7 +75,7 @@ int main(int argc, char** argv)
 		}
 		case 3:
 		{
-			login_flag = tester_login(nowTester, addrSrv);//登录成功时，nowTester会变化
+			login_flag = tester_login(nowTester, addrSrv);//登录成功时，nowTester会变化，nowTester只有用户名和密码
 			if (login_flag==1)
 			{
 				state_testmake(wordList,wordAddList);

@@ -7,6 +7,9 @@ enum stateCode { ERR_CODE, WORD_SYNC, USER_REGIST, USER_LOGIN, PLAYER_RESULT, TE
 //状态中间空了一个5号，因为把TesterLogin和PlayerLogin合并了。
 int state_socket(stateCode,string& myInfo,SOCKET sockClient);//其他情况下直接转成字符串传就行
 int state_socket(stateCode, vector<string>& wordList, SOCKET sockClient);//进行词库同步时需要传入一个容器
+//OKByte用于维持信道心跳
+int OKByte_send(SOCKET sockClient);
+int OKByte_recv(SOCKET sockClient);
 
 
 //注册状态（在user_register.cpp中）
