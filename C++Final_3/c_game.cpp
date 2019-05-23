@@ -62,10 +62,20 @@ int state_game(vector<string>& wordList)//返回值为闯关数
 }
 void flush_player(player& nowPlayer,int bestRound, SOCKADDR_IN addrSrv)
 {
+	int flush_flag = -1;
 	SOCKET sockClient = socket_init(addrSrv);
 	string tmpString = nowPlayer.get_name() + "," + std::to_string(bestRound);
-	state_socket(PLAYER_RESULT, tmpString, sockClient);
+	flush_flag = state_socket(PLAYER_RESULT, tmpString, sockClient);
 	closesocket(sockClient);
-	//更新此人的经验、等级、最佳轮数
+	for (int i = 0; flush_flag != 0 && i < 2; i++)
+	{
+		cout << "Reconnecting......" << endl;
+		sockClient = socket_init(addrSrv);
+		flush_flag = state_socket(PLAYER_RESULT, tmpString, sockClient);
+		closesocket(sockClient);
+	}
+	if (flush_flag == 0)cout << "Result Upload Success" << endl;
+	else cout << "Result Upload Failure" << endl;
+	//更新此人的经验、等级、最佳轮数。如果发送一次失败就再发送一次。发送三次失败时则返回失败。
 	return;
 }

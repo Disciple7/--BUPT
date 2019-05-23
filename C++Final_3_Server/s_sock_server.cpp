@@ -152,7 +152,7 @@ void state_socket()
 		{
 			cout << "PLAYER_RESULT ERR 04_1" << endl;
 			closesocket(test_flag_socketClient);
-			return;
+			break;
 		}
 		else recvBuf[accurateByte] = '\0';
 		string tmpString = recvBuf;
@@ -161,6 +161,7 @@ void state_socket()
 		int flush_flag = state_player_result(tmpUser, playerList);
 		if (flush_flag == 1)cout << "PLAYER_RESULT FLUSH Succeeded." << endl;
 		else cout << "PLAYER_RESULT ERR 04_2" << endl;
+		closesocket(test_flag_socketClient);
 		break;
 	}
 	case TESTER_RESULT:
@@ -177,6 +178,7 @@ void state_socket()
 		if (accurateByte <= 0)
 		{
 			cout << "TESTER_RESULT ERR 06_1" << endl;
+			closesocket(test_flag_socketClient);
 			break;
 		}
 		else recvBuf[accurateByte] = '\0';
@@ -186,7 +188,12 @@ void state_socket()
 		string name = wordAddList[0];
 		wordAddList.erase(wordAddList.begin());//把开头的用户名给去掉
 		int tester_flag = state_tester_result(name, wordAddList, wordList, testerList);
-		if (tester_flag != 1)cout << "TESTER_RESULT ERR 06_2" << endl;
+		if (tester_flag != 1)
+		{
+			cout << "TESTER_RESULT ERR 06_2" << endl;
+			closesocket(test_flag_socketClient);
+			break;
+		}
 		else cout << "TESTER_RESULT FLUSH Succeeded" << endl;
 		OKByte = send(test_flag_socketClient, "OK", 2, 0);//取到用户名后发送确认信号
 		if (OKByte != 2)

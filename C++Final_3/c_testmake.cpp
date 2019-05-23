@@ -36,10 +36,18 @@ void flush_tester(tester& nowTester, vector<string>& wordAddList, SOCKADDR_IN ad
 	for (int i = wordAddList.size() - 1; i >= 0; i--)
 	{
 		tmpString = tmpString + "," + wordAddList[i];
-		wordAddList.pop_back();
 	}
 	SOCKET sockClient = socket_init(addrSrv);
 	int flush_flag = state_socket(TESTER_RESULT, tmpString, sockClient);//发送所有信息，包括用户名和单词列表（整合成一个字符串）
 	closesocket(sockClient);
+	for (int i = 0; flush_flag != 0 && i < 3; i++)
+	{
+		cout << "Reconnecting......" << endl;
+		sockClient = socket_init(addrSrv);
+		flush_flag = state_socket(TESTER_RESULT, tmpString, sockClient);
+		closesocket(sockClient);
+	}
+	if (flush_flag == 0)cout << "Result Upload Success" << endl;
+	else cout << "Result Upload Failure" << endl;
 	return;
 }

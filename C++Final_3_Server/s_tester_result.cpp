@@ -17,14 +17,14 @@ int state_tester_result(string name, vector<string>& wordAddList,vector<string>&
 	string myWord;
 	for(wordCount =0;wordCount<wordAddList.size();wordCount++)
 	{
-		myWord = wordAddList[0];
-		vector<string>::iterator wordIter = wordList.begin();
-		for (; wordIter != wordList.end(); wordIter++)//输入一个单词后，在单词表里检查一遍
+		myWord = wordAddList[wordCount];
+		unsigned int i = 0;
+		for (;i<wordList.size(); i++)//输入一个单词后，在单词表里检查一遍
 		{
-			if (myWord == *wordIter)
+			if (myWord == wordList[i])
 				break;
 		}
-		if (wordIter == wordList.end())//未检查到相同单词，则Iter会指到end()，此时可把单词写入到wordList和wordFile中
+		if (i == wordList.size())//未检查到相同单词，则Iter会指到end()，此时可把单词写入到wordList和wordFile中
 		{
 			wordList.push_back(myWord);
 			wordFile << myWord << endl;
@@ -74,7 +74,7 @@ int state_tester_result(string name, vector<string>& wordAddList,vector<string>&
 		tmpInfoList.clear();//tmpInfoList要清理，因为string_split用的是push_back，不检查容器内容
 		tmpFptr = testerFile.tellg();
 	}
-	if ((testerIter != testerList.end()) && (!testerFile.eof()))
+	if (testerIter != testerList.end())
 	{
 		testerFile.close();
 		return 1;

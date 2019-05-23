@@ -20,7 +20,7 @@ int state_socket(stateCode state, string& myInfo, SOCKET sockClient)//其他情况下
 		{
 			cout << "Client Flooded" << endl;
 			closesocket(sockClient);
-			break;
+			return -1;
 		}
 		//发送账户类型，用户名和密码
 		accurateBytes = send(sockClient, myInfo.c_str(), myInfo.length(), 0);
@@ -45,7 +45,7 @@ int state_socket(stateCode state, string& myInfo, SOCKET sockClient)//其他情况下
 			{
 				cout << "Server Flooded" << endl;
 				closesocket(sockClient);
-				break;
+				return -1;
 			};
 			recvBuf[accurateBytes] = '\0';
 			if(recvBuf[0]=='0')cout << "recv error 02_2";
@@ -118,7 +118,7 @@ int state_socket(stateCode state, string& myInfo, SOCKET sockClient)//其他情况下
 		{
 			cout << "Client Flooded" << endl;
 			closesocket(sockClient);
-			break;
+			return -1;
 		}
 		//发送用户名和本轮游戏成绩
 		accurateBytes = send(sockClient, myInfo.c_str(), myInfo.length(), 0);
@@ -127,7 +127,7 @@ int state_socket(stateCode state, string& myInfo, SOCKET sockClient)//其他情况下
 			cout << "send error 04_2" << endl;
 			return -1;
 		}
-		break;
+		else return 0;
 	}
 	case TESTER_RESULT:
 	{
@@ -146,7 +146,7 @@ int state_socket(stateCode state, string& myInfo, SOCKET sockClient)//其他情况下
 		{
 			cout << "Client Flooded" << endl;
 			closesocket(sockClient);
-			break;
+			return -1;
 		}
 		//发送用户名+单词列表
 		accurateBytes = send(sockClient, myInfo.c_str(), myInfo.length(), 0);
@@ -161,9 +161,9 @@ int state_socket(stateCode state, string& myInfo, SOCKET sockClient)//其他情况下
 		{
 			cout << "Client Flooded" << endl;
 			closesocket(sockClient);
+			return -1;
 		}
 		else return 0;
-		break;
 	}
 	case USER_QUERY:
 	{
@@ -206,7 +206,7 @@ int state_socket(stateCode state, string& myInfo, SOCKET sockClient)//其他情况下
 		{
 			cout << "Server Flooded" << endl;
 			closesocket(sockClient);
-			break;
+			return -1;
 		};
 		while (accurateBytes >0 )
 		{
@@ -217,7 +217,7 @@ int state_socket(stateCode state, string& myInfo, SOCKET sockClient)//其他情况下
 			{
 				cout << "All Info Listed" << endl;
 				closesocket(sockClient);
-				break;
+				return -1;
 			}
 			else recvBuf[accurateBytes] = '\0';
 			OKByte = send(sockClient, "OK", 2, 0);//发送一个确认信息
@@ -225,11 +225,10 @@ int state_socket(stateCode state, string& myInfo, SOCKET sockClient)//其他情况下
 			{
 				cout << "Server Flooded" << endl;
 				closesocket(sockClient);
-				break;
+				return -1;
 			};
 		}
 		return 0;
-		break;
 	}
 	default:
 	{
