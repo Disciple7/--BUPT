@@ -3,9 +3,6 @@
 #pragma comment(lib,"WS2_32.LIB")
 const char *ServerIP = "127.0.0.1";
 
-void Rec(SOCKET sockClient);
-void Send(SOCKET sockClient);
-
 int main(int argc, char** argv)
 {
 	//设置第一个套接字，建立连接
