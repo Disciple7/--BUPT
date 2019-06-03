@@ -1,7 +1,7 @@
 #ifndef s_global_H
 #define s_global_H
 
-#define DEV_MODE 1
+#define DEV_MODE 0
 #include <winsock2.h>
 #include <iostream>
 #include<iomanip>
